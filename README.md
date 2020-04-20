@@ -1,19 +1,19 @@
 # Learning-Project-Game-Simulation
 
 
-int heroHealth = 20;
-int monsterHealth = 20;
+int heroHealth = 20;    
+int monsterHealth = 20; 
 
-Random roll = new Random();
-Random critChance = new Random();
+Random roll = new Random(); 
+Random critChance = new Random();   
 
 do
 {
-    int heroBaseDamage = roll.Next(1, 6);
-    int monsterBaseDamage = roll.Next(1, 6);
-    int critHit = critChance.Next(1, 16);
-    int heroCritDamage = heroBaseDamage * 2;
-    int monsterCritDamage = monsterBaseDamage * 2;
+    int heroBaseDamage = roll.Next(1, 6);   
+    int monsterBaseDamage = roll.Next(1, 6);    
+    int critHit = critChance.Next(1, 16);   
+    int heroCritDamage = heroBaseDamage * 2;    
+    int monsterCritDamage = monsterBaseDamage * 2;  
 
     if (monsterHealth > 0)
     {
@@ -45,6 +45,6 @@ do
         if (heroHealth <= 0) break;
     }
 
-} while ((heroHealth > 0) && (monsterHealth > 0));
+} while ((heroHealth > 0) && (monsterHealth > 0));  
 
 Console.WriteLine(heroHealth > monsterHealth ? "Hero wins!" : "Monster wins!");
