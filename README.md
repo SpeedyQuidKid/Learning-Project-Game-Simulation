@@ -1,31 +1,43 @@
 # Learning-Project-Game-Simulation
-int hero = 10;  
-int monster = 10;   
+int heroHP = 10;
+int monsterHP = 10;
 
-Random critHit = new Random();  
-Random roll = new Random();     
+Random roll = new Random();
+Random critChance = new Random();
+Random healChance = new Random();
 
-do      
-{   
-int attack = 0;     
-        if (monster > 0)     
-            {   
-                int critDamage = critHit.Next(1, 15);   
-                attack = (critDamage == 3 ? (roll.Next(1, 11) * 2) : (roll.Next(1, 11)));   
-                if (critDamage == 3) {Console.WriteLine("Hero crit!");}     
-                monster -= attack;  
-                Console.WriteLine(monster > 0 ? $"Hero did {attack} damage! Monster has {monster} HP left!" : $"Hero did {attack} damage and monster is dead! {monster}");  
-            }       
-        if (monster <= 0) break;       
-        if (hero > 0)   
-            {   
-                int critDamage = critHit.Next(1, 15);   
-                attack = (critDamage == 2 ? (roll.Next(1, 11) * 2) : (roll.Next(1, 11)));   
-                   if (critDamage == 2) {Console.WriteLine("Monster crit!");}  
-                hero -= attack;     
-                Console.WriteLine(hero > 0 ? $"Monster did {attack} damage! Hero has {hero} HP left!" : $"Monster did {attack} damage and hero is dead! {hero}");   
-        }    
-        if (hero <= 0) break;   
-} while (hero > 0 && monster > 0);  
+do
+{
+int attack = 0;
+int heal = 0;
+    if (monsterHP > 0)
+        {
+            int critHit = critChance.Next(1, 16);
+            monsterHP -= (critHit == 15 ? (attack = roll.Next(1, 11) + 5) : (attack = roll.Next(1, 11)));
+            Console.WriteLine(critHit == 15 ? $"Hero Crit for {attack} damage! Monster has {monsterHP} health left!": $"Hero did {attack} damage! Monster has {monsterHP} HP left!");
+            if (monsterHP <= 0) break; 
+        }
+    if (heroHP > 0)
+        {
+            int critHit = critChance.Next(1, 16);
+            heroHP -= (critHit == 15 ? (attack = roll.Next(1, 11) + 5) : (attack = roll.Next(1, 11)));
+            Console.WriteLine(critHit == 15 ? $"Monster crit for {attack} damage! Hero has {heroHP} health left!": $"Monster did {attack} damage! Hero has {heroHP} HP left!");
+            if (heroHP <= 0) break;
+        }
+    if (heroHP < 10)
+    {
+        heal = healChance.Next(1, 5);
+        heroHP += (heal == 4 ? (4) : 0);
+        if (heroHP > 10) {heroHP = 10;}
+        if (heal == 4) {Console.WriteLine($"Hero healed for 4 health! Hero now has {heroHP} HP!");}
+    }
+    if (monsterHP < 10)
+    {
+        heal = healChance.Next(1, 4);
+        monsterHP += (heal == 3 ? (4): 0);
+        if (monsterHP > 10) {monsterHP = 10;}
+        if (heal == 3) {Console.WriteLine($"Monster healed for 4 health! Monster now has {monsterHP} HP!");}
+    }
+} while (heroHP > 0 && monsterHP > 0);
 
-Console.WriteLine(hero > monster ? "Hero wins!" : "Monster wins!"); 
+ Console.WriteLine(heroHP > monsterHP ? "Hero wins!" : "Monster wins!");
